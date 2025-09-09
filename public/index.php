@@ -1,28 +1,29 @@
 <?php
-?><!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Music Library</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link href="assets/css/style.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container py-5">
-      <header class="mb-4">
-        <h1 class="display-6">Music Library</h1>
-        <p class="text-muted m-0">Les 1</p>
-      </header>
-      <div class="album py-4 bg-light rounded">
-        <div class="row g-3">
-          <div class="col-12 text-center">Content of this project</div>
+require_once __DIR__ . '/../views/header.php';
+require_once __DIR__ . '/../views/data.php';
+?>
+  <section class="hero card border-0 overflow-hidden mb-5">
+    <div class="hero-img-wrap">
+      <img src="assets/img/banner.jpg" class="hero-img" alt="A Matter of Time">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-text p-4 p-md-5">
+      <h1 class="display-5 text-shadow"><?php echo htmlspecialchars($album['title']); ?></h1>
+      <p class="lead m-0 text-shadow"><?php echo htmlspecialchars($album['artist']); ?> — Released <?php echo htmlspecialchars($album['released']); ?></p>
+    </div>
+  </section>
+
+  <h2 class="h4 text-uppercase text-muted tracking mb-3">Tracklist</h2>
+  <div class="row g-4">
+    <?php foreach ($tracks as $t): ?>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-soft text-center d-flex flex-column justify-content-center">
+          <div class="card-body">
+            <h5 class="card-title mb-2"><?php echo htmlspecialchars($t['no'] . '. ' . $t['title']); ?></h5>
+            <p class="card-text text-muted"><?php echo htmlspecialchars($t['duration']); ?> • <?php echo (int)$t['year']; ?></p>
+          </div>
         </div>
       </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
-  </body>
-</html>
+    <?php endforeach; ?>
+  </div>
+<?php require_once __DIR__ . '/../views/footer.php'; ?>

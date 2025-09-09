@@ -1,1 +1,88 @@
-body { min-height: 100vh; }
+:root{
+  --deep:#0b1e2d;
+  --teal:#0c344a;
+  --mist:#c9d6df;
+  --pale:#7fbcd2;
+  --ink:#0a1620;
+  --card:#122536;
+}
+
+body{
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:#e9f1f5;
+  background:
+    radial-gradient(1200px 800px at 20% -10%, rgba(127,188,210,.18), transparent 70%),
+    radial-gradient(1000px 600px at 120% 10%, rgba(12,52,74,.35), transparent 70%),
+    linear-gradient(180deg, var(--ink), var(--deep) 60%, var(--teal));
+  min-height:100vh;
+}
+
+.theme-a-matter-of-time .container{max-width:1100px}
+
+.bg-deep{background:var(--deep)}
+
+.nav-glass{
+  background: rgba(11,30,45,.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(201,214,223,.2);
+}
+.navbar-brand{font-family:'Playfair Display', serif; letter-spacing:.5px}
+.navbar .nav-link{color:#e8f0f6}
+.navbar .nav-link:hover{color:var(--pale)}
+
+.nav-spacer{height:64px}
+
+.text-shadow{text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.shadow-soft{box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.card.shadow-soft{background:var(--card); border:1px solid rgba(201,214,223,.12)}
+.card .btn{border-color:rgba(201,214,223,.35); color:#e8f0f6}
+.card .btn:hover{background:rgba(201,214,223,.08)}
+
+.tracking{letter-spacing:.15rem}
+
+.hero{
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--deep);
+}
+.hero-img-wrap{position:relative}
+.hero-img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+  height: min(55vh,520px);
+  filter:saturate(0.95) contrast(1.05);
+}
+.hero-overlay{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(120% 80% at 50% 20%, rgba(11,30,45,0) 0%, rgba(11,30,45,.35) 60%, rgba(11,30,45,.85) 100%),
+    repeating-radial-gradient(circle at 70% -10%, rgba(255,255,255,.15) 0 1px, rgba(255,255,255,0) 2px 6px);
+  pointer-events:none;
+}
+.hero-text{
+  position:absolute; left:0; bottom:0; color:#fff;
+}
+.hero-text .display-5, .hero-text .lead{font-family:'Playfair Display', serif}
+
+.ratio-1x1{aspect-ratio:1/1; object-fit:cover}
+
+h1,h2,h3,h4,.navbar-brand{font-family:'Playfair Display', serif}
+
+a{color:var(--pale)}
+a:hover{color:#a8d6e8}
+
+.lead{color:#e3edf3}
+.text-muted{color:#c4d3dc !important}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+}
+
+.card.text-center {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #f5f7fa;
+}
