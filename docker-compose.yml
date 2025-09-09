@@ -1,0 +1,50 @@
+services:
+  php:
+    image: wodby/php:latest
+    container_name: prog_m5_php
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    environment:
+      PHP_FPM_CLEAR_ENV: "no"
+
+  nginx:
+    image: nginx:latest
+    container_name: prog_m5_nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    links:
+      - php
+    volumes:
+      - ./:/var/www/html
+      - ./docker:/etc/nginx/conf.d
+
+  mariadb:
+    image: mariadb:latest
+    container_name: prog_m5_mariadb
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "3305:3306"   # external:internal
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: prog_m5_phpmyadmin
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8805:80"
+    depends_on:
+      - mariadb
+
+volumes:
+  dbdata:
