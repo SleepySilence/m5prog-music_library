@@ -21,6 +21,7 @@ require_once __DIR__ . '/../views/data.php';
           <div class="card-body">
             <h5 class="card-title mb-2"><?php echo htmlspecialchars($t['no'] . '. ' . $t['title']); ?></h5>
             <p class="card-text text-muted"><?php echo htmlspecialchars($t['duration']); ?> • <?php echo (int)$t['year']; ?></p>
+            <a href="track.php?track=<?php echo urlencode($t['slug']); ?>" class="btn btn-outline-light mt-2">View</a>
           </div>
         </div>
       </div>

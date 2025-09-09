@@ -86,3 +86,22 @@ a:hover{color:#a8d6e8}
   border: 1px solid rgba(255,255,255,0.1);
   color: #f5f7fa;
 }
+.track-detail h1 {
+  font-family: 'Playfair Display', serif;
+}
+.track-detail h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.track-detail .lead {
+  font-size: 1.1rem;
+}
+
+.track-detail p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
