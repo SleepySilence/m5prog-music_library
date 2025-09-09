@@ -1,16 +1,10 @@
 <?php
 require_once __DIR__ . '/../views/header.php';
-require_once __DIR__ . '/../views/data.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../models/TrackModel.php';
 
-$slug = $_GET['track'] ?? null;
-$currentTrack = null;
-
-foreach ($tracks as $t) {
-  if ($t['slug'] === $slug) {
-    $currentTrack = $t;
-    break;
-  }
-}
+$slug = $_GET['track'] ?? '';
+$currentTrack = $slug ? track_by_slug($pdo, $slug) : null;
 
 if (!$currentTrack) {
   echo "<h1>Track not found</h1>";
@@ -24,8 +18,14 @@ if (!$currentTrack) {
       <p class="lead mb-1">Track #<?php echo (int)$currentTrack['no']; ?></p>
       <p class="mb-1">Duration: <?php echo htmlspecialchars($currentTrack['duration']); ?></p>
       <p class="mb-1">Year: <?php echo (int)$currentTrack['year']; ?></p>
-      <p class="mt-3"><?php echo htmlspecialchars($currentTrack['description']); ?></p>
-      <a href="index.php" class="btn btn-outline-light mt-4">← Back to tracklist</a>
+      <p class="mt-3"><?php echo nl2br(htmlspecialchars($currentTrack['description'])); ?></p>
+      <div class="mt-4">
+        <a href="index.php" class="btn btn-secondary me-2">← Back</a>
+        <a href="edit.php?track=<?php echo urlencode($currentTrack['slug']); ?>" class="btn btn-outline-light me-2">Edit</a>
+        <form method="post" action="delete.php?track=<?php echo urlencode($currentTrack['slug']); ?>" style="display:inline">
+          <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this track?')">Delete</button>
+        </form>
+      </div>
     </div>
   </div>
 <?php require_once __DIR__ . '/../views/footer.php'; ?>

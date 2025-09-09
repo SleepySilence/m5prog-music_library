@@ -103,5 +103,7 @@ a:hover{color:#a8d6e8}
   font-size: 1rem;
   line-height: 1.5;
 }
+.table, .card, .form-control { background: rgba(255,255,255,0.05); color:#e9f1f5; }
+.form-control, .btn { border-color: rgba(201,214,223,0.25); }
 
 

@@ -1,6 +1,16 @@
 <?php
 require_once __DIR__ . '/../views/header.php';
-require_once __DIR__ . '/../views/data.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../models/TrackModel.php';
+
+$album = [
+  'title' => 'A Matter of Time',
+  'artist' => 'Laufey',
+  'released' => '2025-08-22',
+  'cover' => 'assets/img/album.jpg'
+];
+
+$tracks = tracks_all($pdo);
 ?>
   <section class="hero card border-0 overflow-hidden mb-5">
     <div class="hero-img-wrap">
