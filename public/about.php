@@ -3,7 +3,7 @@ require_once __DIR__ . '/../views/header.php';
 ?>
   <div class="row align-items-center g-4">
     <div class="col-md-6">
-      <img src="assets/img/laufey.jpg" class="img-fluid rounded shadow-soft" alt="A Matter of Time">
+      <img src="/assets/img/laufey.jpg" class="img-fluid rounded shadow-soft" alt="A Matter of Time">
     </div>
     <div class="col-md-6">
       <h1 class="mb-3">About</h1>

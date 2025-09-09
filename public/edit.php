@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../lib/auth.php';
+require_login();
 require_once __DIR__ . '/../views/header.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/TrackModel.php';
@@ -38,10 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $base = trim($base, '-');
   $slugOut = $base === '' ? $current['slug'] : $base;
   $i = 2;
-  while (track_slug_exists_other($pdo, $slugOut, (int)$current['id'])) {
-    $slugOut = $base . '-' . $i;
-    $i++;
-  }
+  while (track_slug_exists_other($pdo, $slugOut, (int)$current['id'])) { $slugOut = $base . '-' . $i; $i++; }
   $values['slug'] = $slugOut;
 
   if (empty($errors)) {
@@ -53,40 +52,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'slug' => $values['slug'],
       'description' => $values['description'],
     ]);
-    header('Location: track.php?track=' . urlencode($values['slug']));
+    flash('success', 'Track updated.');
+    header('Location: /single/' . urlencode($values['slug']));
     exit;
   }
 }
 ?>
-  <h1 class="mb-4">Edit Track</h1>
-  <form method="post" class="row g-3">
-    <div class="col-md-2">
-      <label class="form-label">No</label>
-      <input type="number" name="no" class="form-control <?php echo isset($errors['no'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['no']); ?>">
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">Title</label>
-      <input type="text" name="title" class="form-control <?php echo isset($errors['title'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['title']); ?>">
-    </div>
-    <div class="col-md-4">
-      <label class="form-label">Duration (mm:ss)</label>
-      <input type="text" name="duration" class="form-control <?php echo isset($errors['duration'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['duration']); ?>">
-    </div>
-    <div class="col-md-3">
-      <label class="form-label">Year</label>
-      <input type="number" name="year" class="form-control <?php echo isset($errors['year'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['year']); ?>">
-    </div>
-    <div class="col-md-9">
-      <label class="form-label">Slug</label>
-      <input type="text" name="slug" class="form-control" value="<?php echo htmlspecialchars($values['slug']); ?>">
-    </div>
-    <div class="col-12">
-      <label class="form-label">Description</label>
-      <textarea name="description" rows="6" class="form-control"><?php echo htmlspecialchars($values['description']); ?></textarea>
-    </div>
-    <div class="col-12">
-      <button type="submit" class="btn btn-outline-light">Save</button>
-      <a href="track.php?track=<?php echo urlencode($current['slug']); ?>" class="btn btn-secondary ms-2">Cancel</a>
-    </div>
-  </form>
+<h1 class="mb-4">Edit Track</h1>
+<form method="post" class="row g-3">
+  <div class="col-md-2">
+    <label class="form-label">No</label>
+    <input type="number" name="no" class="form-control <?php echo isset($errors['no'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['no']); ?>">
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Title</label>
+    <input type="text" name="title" class="form-control <?php echo isset($errors['title'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['title']); ?>">
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Duration (mm:ss)</label>
+    <input type="text" name="duration" class="form-control <?php echo isset($errors['duration'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['duration']); ?>">
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Year</label>
+    <input type="number" name="year" class="form-control <?php echo isset($errors['year'])?'is-invalid':''; ?>" value="<?php echo htmlspecialchars($values['year']); ?>">
+  </div>
+  <div class="col-md-9">
+    <label class="form-label">Slug</label>
+    <input type="text" name="slug" class="form-control" value="<?php echo htmlspecialchars($values['slug']); ?>">
+  </div>
+  <div class="col-12">
+    <label class="form-label">Description</label>
+    <textarea name="description" rows="6" class="form-control"><?php echo htmlspecialchars($values['description']); ?></textarea>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-outline-light">Save</button>
+    <a href="/single/<?php echo urlencode($current['slug']); ?>" class="btn btn-secondary ms-2">Cancel</a>
+  </div>
+</form>
 <?php require_once __DIR__ . '/../views/footer.php'; ?>

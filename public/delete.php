@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../lib/auth.php';
+require_login();
 require_once __DIR__ . '/../views/header.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/TrackModel.php';
@@ -13,14 +15,15 @@ if (!$current) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   track_delete($pdo, (int)$current['id']);
-  header('Location: index.php');
+  flash('success', 'Track deleted.');
+  header('Location: /');
   exit;
 }
 ?>
-  <h1 class="mb-3">Delete Track</h1>
-  <p>Delete “<?php echo htmlspecialchars($current['title']); ?>”?</p>
-  <form method="post" class="mt-3">
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a href="track.php?track=<?php echo urlencode($current['slug']); ?>" class="btn btn-secondary ms-2">Cancel</a>
-  </form>
+<h1 class="mb-3">Delete Track</h1>
+<p>Delete “<?php echo htmlspecialchars($current['title']); ?>”?</p>
+<form method="post" class="mt-3">
+  <button type="submit" class="btn btn-danger">Delete</button>
+  <a href="/single/<?php echo urlencode($current['slug']); ?>" class="btn btn-secondary ms-2">Cancel</a>
+</form>
 <?php require_once __DIR__ . '/../views/footer.php'; ?>

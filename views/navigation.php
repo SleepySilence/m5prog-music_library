@@ -9,7 +9,12 @@
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/about.php">About</a></li>
         <li class="nav-item"><a class="nav-link" href="/contact.php">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="/add.php">Add Track</a></li>
+        <?php if (!empty($_SESSION['user'])): ?>
+          <li class="nav-item"><a class="nav-link" href="/add.php">Add Track</a></li>
+          <li class="nav-item"><a class="nav-link" href="/logout.php">Logout</a></li>
+        <?php else: ?>
+          <li class="nav-item"><a class="nav-link" href="/login.php">Login</a></li>
+        <?php endif; ?>
       </ul>
     </div>
   </div>

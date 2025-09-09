@@ -53,3 +53,29 @@ function track_delete(PDO $pdo, int $id): void {
   $stmt = $pdo->prepare("DELETE FROM tracks WHERE id = ?");
   $stmt->execute([$id]);
 }
+
+function tracks_count(PDO $pdo, string $q): int {
+  $sql = "SELECT COUNT(*) FROM tracks";
+  if ($q !== '') $sql .= " WHERE title LIKE :q OR description LIKE :q";
+  $stmt = $pdo->prepare($sql);
+  if ($q !== '') $stmt->bindValue(':q', '%'.$q.'%', PDO::PARAM_STR);
+  $stmt->execute();
+  return (int)$stmt->fetchColumn();
+}
+
+function tracks_find(PDO $pdo, string $q, string $sort, string $dir, int $limit, int $offset): array {
+  $allowedSort = ['no','title','duration','year'];
+  if (!in_array($sort, $allowedSort, true)) $sort = 'no';
+  $dir = strtoupper($dir) === 'DESC' ? 'DESC' : 'ASC';
+
+  $sql = "SELECT id, no, title, duration, year, slug FROM tracks";
+  if ($q !== '') $sql .= " WHERE title LIKE :q OR description LIKE :q";
+  $sql .= " ORDER BY $sort $dir LIMIT :limit OFFSET :offset";
+
+  $stmt = $pdo->prepare($sql);
+  if ($q !== '') $stmt->bindValue(':q', '%'.$q.'%', PDO::PARAM_STR);
+  $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+  $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll();
+}
